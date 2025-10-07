@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
 import 'package:uzchasys_app/constants/app_images.dart';
-import 'package:uzchasys_app/core/routes/app_routes.dart';
-import 'package:uzchasys_app/core/routes/navigation_service.dart';
-import 'package:uzchasys_app/features/auth/presentation/widgets/phone_text_field.dart';
-import 'package:uzchasys_app/global/widgets/app_bar_widget.dart';
+
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/navigation_service.dart';
+import '../../../../global/widgets/app_bar_widget.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/footer_link.dart';
+import '../widgets/phone_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-
+  final newPasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final phoneFocus = FocusNode();
   final passwordFocus = FocusNode();
-
   bool _obscurePassword = true;
 
   @override
@@ -31,23 +31,24 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBarWidget(
-        title: 'Login',
+        title: 'Register',
         titleSize: 30.sp,
         showBackButton: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
           child: SizedBox(
             height: 0.85.sh,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   children: [
                     20.h.verticalSpace,
                     Image(
-                      image: AssetImage(AppImages.loginLogo),
+                      image: AssetImage(AppImages.registerLogo),
                       height: 140.h,
                     ),
                   ],
@@ -55,17 +56,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     // Phone Number Field
-                    PhoneTextField(
+                     PhoneTextField(
                       controller: phoneController,
                       currentFocus: phoneFocus,
                       nextFocus: passwordFocus,
                     ),
+
                     20.verticalSpace,
 
                     // Password Field
                     CustomTextField(
-                      label: "Password",
-                      controller: passwordController,
+                      label: "New password",
+                      controller: newPasswordController,
                       obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
@@ -81,40 +83,54 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                     ),
-                    12.verticalSpace,
 
-                    // Forgot password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // forgot password action
-                        },
-                        child: Text(
-                          "Forgot password",
-                          style: TextStyle(color: AppColors.primaryColor),
+                    20.verticalSpace,
+
+                    // Password Field
+                    CustomTextField(
+                      label: "Confirm password",
+                      controller: confirmPasswordController,
+                      obscureText: _obscurePassword,
+                      keyboardType: TextInputType.visiblePassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
                       ),
                     ),
-                    40.h.verticalSpace,
+                  40.h.verticalSpace,
                   ],
                 ),
-                // Sign in button and Register link
+
+                //button
                 Column(
                   children: [
                     CustomButton(
                       onPressed: () {
-                        // sign in action
+                        NavigationService.instance.pushNamed(
+                          routeName: AppRoutesNames.confirm,
+                        );
                       },
-                      text: "Sign in",
+                      text: "Create account",
                     ),
+
                     18.verticalSpace,
+                    // Register link
                     FooterLink(
                       onTap: () {
                         NavigationService.instance.pushNamedAndRemoveUntil(
-                          routeName: AppRoutesNames.register,
+                          routeName: AppRoutesNames.login,
                         );
                       },
+                      linkText: "Sign in",
+                      questionText: "Already have an account? ",
                     ),
                   ],
                 ),
@@ -129,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     phoneController.dispose();
-    passwordController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
     phoneFocus.dispose();
     passwordFocus.dispose();
     super.dispose();
