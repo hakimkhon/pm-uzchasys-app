@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:uzchasys_app/core/routes/app_routes.dart';
 import '../../../../constants/app_colors.dart';
+import '../../../../core/routes/navigation_service.dart';
 
 class FooterLink extends StatelessWidget {
-  final VoidCallback onTap;
+  final String routeName;
   final String questionText;
   final String linkText;
 
   const FooterLink({
     super.key,
-    required this.onTap,
+    this.routeName = AppRoutesNames.register,
     this.questionText = "New to UzChasys group? ",
     this.linkText = "Register",
   });
@@ -24,7 +26,10 @@ class FooterLink extends StatelessWidget {
           style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryColor),
         ),
         GestureDetector(
-          onTap: onTap,
+           onTap: (){
+            NavigationService.instance.pushNamed(
+              routeName: routeName,
+            );},
           child: Text(
             linkText,
             style: TextStyle(

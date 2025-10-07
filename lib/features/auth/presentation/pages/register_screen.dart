@@ -4,7 +4,7 @@ import 'package:uzchasys_app/constants/app_colors.dart';
 import 'package:uzchasys_app/constants/app_images.dart';
 
 import '../../../../core/routes/app_routes.dart';
-import '../../../../core/routes/navigation_service.dart';
+import '../../../../core/utils/validators.dart';
 import '../../../../global/widgets/app_bar_widget.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
@@ -20,21 +20,17 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
-  final newPasswordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmController = TextEditingController();
   final phoneFocus = FocusNode();
-  final passwordFocus = FocusNode();
+  final newPasswordFocus = FocusNode();
   bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(
-        title: 'Register',
-        titleSize: 30.sp,
-        showBackButton: false,
-      ),
+      appBar: AppBarWidget(title: 'Register', showBackButton: false),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
@@ -56,10 +52,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Column(
                   children: [
                     // Phone Number Field
-                     PhoneTextField(
+                    PhoneTextField(
                       controller: phoneController,
                       currentFocus: phoneFocus,
-                      nextFocus: passwordFocus,
+                      nextFocus: newPasswordFocus,
                     ),
 
                     20.verticalSpace,
@@ -67,7 +63,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // Password Field
                     CustomTextField(
                       label: "New password",
-                      controller: newPasswordController,
+                      controller: passwordController,
+                      focusNode: newPasswordFocus, // muhim: focus node ulanmoqda
+                      textInputAction: TextInputAction.done,
                       obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
@@ -83,13 +81,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-
                     20.verticalSpace,
-
                     // Password Field
                     CustomTextField(
                       label: "Confirm password",
-                      controller: confirmPasswordController,
+                      controller: confirmController,
                       obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
@@ -105,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                  40.h.verticalSpace,
+                    80.h.verticalSpace,
                   ],
                 ),
 
@@ -113,22 +109,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Column(
                   children: [
                     CustomButton(
-                      onPressed: () {
-                        NavigationService.instance.pushNamed(
-                          routeName: AppRoutesNames.confirm,
-                        );
-                      },
                       text: "Create account",
+                      onPressed: _onRegisterPressed,
                     ),
-
                     18.verticalSpace,
                     // Register link
                     FooterLink(
-                      onTap: () {
-                        NavigationService.instance.pushNamedAndRemoveUntil(
-                          routeName: AppRoutesNames.login,
-                        );
-                      },
+                      routeName: AppRoutesNames.login,
                       linkText: "Sign in",
                       questionText: "Already have an account? ",
                     ),
@@ -142,13 +129,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  void _onRegisterPressed() {
+    final phone = phoneController.text.trim();
+    final password = passwordController.text.trim();
+    final confirmPassword = confirmController.text.trim();
+
+    FormValidator.validateRegister(
+      context: context,
+      phone: phone,
+      newPassword: password,
+      confirmPassword: confirmPassword,
+      routeName: AppRoutesNames.confirm, // masalan tasdiqlash sahifasi
+      argument: phone,
+    );
+  }
+
   @override
   void dispose() {
     phoneController.dispose();
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
+    passwordController.dispose();
+    confirmController.dispose();
     phoneFocus.dispose();
-    passwordFocus.dispose();
+    newPasswordFocus.dispose();
     super.dispose();
   }
 }

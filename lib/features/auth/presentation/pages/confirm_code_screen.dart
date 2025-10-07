@@ -5,12 +5,13 @@ import 'package:uzchasys_app/constants/app_images.dart';
 import 'package:uzchasys_app/core/routes/app_routes.dart';
 import 'package:uzchasys_app/core/routes/navigation_service.dart';
 import 'package:uzchasys_app/global/widgets/app_bar_widget.dart';
-import 'package:uzchasys_app/features/auth/presentation/widgets/otp_input_field.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/footer_link.dart';
+import '../widgets/otp_input_field.dart';
 
 class ConfirmCodeScreen extends StatefulWidget {
-  const ConfirmCodeScreen({super.key});
+  final String phoneNumber;
+  const ConfirmCodeScreen({super.key, required this.phoneNumber});
 
   @override
   State<ConfirmCodeScreen> createState() => _ConfirmCodeScreenState();
@@ -32,11 +33,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(
-        title: 'Verification code',
-        titleSize: 30.sp,
-        showBackButton: true,
-      ),
+      appBar: AppBarWidget(title: 'Verification code', showBackButton: true),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -56,9 +53,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                 ),
                 Column(
                   children: [
-                    OtpInputField(
-                      onCompleted: handleOtpComplete,
-                    ),
+                    OtpInputField(onCompleted: handleOtpComplete),
                     18.h.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +82,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                     ),
                     18.h.verticalSpace,
                     Text(
-                      "Tasdiqlash kodi UzChasys nomli bot orqali +998904442244 raqamiga ochilgan telegramga jo’natilindi.",
+                      "Tasdiqlash kodi UzChasys nomli bot orqali ${widget.phoneNumber} raqamiga ochilgan telegramga jo’natilindi.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18.sp,
@@ -101,9 +96,10 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                     CustomButton(
                       onPressed: isButtonActive
                           ? () {
-                              NavigationService.instance.pushNamedAndRemoveUntil(
-                                routeName: AppRoutesNames.login,
-                              );
+                              NavigationService.instance
+                                  .pushNamedAndRemoveUntil(
+                                    routeName: AppRoutesNames.login,
+                                  );
                             }
                           : null,
                       text: "Confirm",
@@ -112,15 +108,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                           : Colors.grey.shade400,
                     ),
                     18.verticalSpace,
-                    FooterLink(
-                      linkText: "",
-                      questionText: "",
-                      onTap: () {
-                        NavigationService.instance.pushNamedAndRemoveUntil(
-                          routeName: AppRoutesNames.register,
-                        );
-                      },
-                    ),
+                    FooterLink(linkText: "", questionText: ""),
                   ],
                 ),
               ],
