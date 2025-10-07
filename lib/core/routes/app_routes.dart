@@ -3,7 +3,7 @@ import 'package:uzchasys_app/features/auth/presentation/pages/confirm_code_scree
 import 'package:uzchasys_app/features/auth/presentation/pages/forgot_pass_screen.dart';
 import 'package:uzchasys_app/features/auth/presentation/pages/login_screen.dart';
 import 'package:uzchasys_app/features/auth/presentation/pages/register_screen.dart';
-import 'package:uzchasys_app/features/home/home_screen.dart';
+import 'package:uzchasys_app/features/home/pages/home_page.dart';
 
 class AppRoutesNames {
   static const String login = '/login';
@@ -29,7 +29,7 @@ class AppRoutes {
           builder: (context) => ConfirmCodeScreen(phoneNumber: settings.arguments as String),
         );
       case AppRoutesNames.home:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomePage());
       case AppRoutesNames.forgot:
         return MaterialPageRoute(builder: (context) => const ForgotPasswordScreen());
       default:
