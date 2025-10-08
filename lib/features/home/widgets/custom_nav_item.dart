@@ -6,15 +6,15 @@ class CustomNavItem extends BottomNavigationBarItem {
     required IconData icon,
     required String label,
     Color? activeColor,
-    double iconSize = 28,
-    double fontSize = 14,
+    double iconSize = 26,
+    double activeIconSize = 29,
   }) : super(
-          icon: Icon(icon, size: iconSize),
-          activeIcon: Icon(
-            icon,
-            size: iconSize + 3,
-            color: activeColor ?? AppColors.primaryColor,
-          ),
-          label: label,
-        );
+         icon: Icon(icon, size: iconSize),
+         activeIcon: Icon(
+           icon,
+           size: activeIconSize,
+           color: activeColor ?? AppColors.primaryColor,
+         ),
+         label: label,
+       );
 }

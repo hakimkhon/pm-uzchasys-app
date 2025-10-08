@@ -24,13 +24,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final confirmController = TextEditingController();
   final phoneFocus = FocusNode();
   final newPasswordFocus = FocusNode();
-  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(title: 'Register', showBackButton: false),
+      appBar: AppBarWidget(title: "Ro'yxatdan o'tish", showBackButton: false),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
@@ -62,44 +61,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // Password Field
                     CustomTextField(
-                      label: "New password",
+                      label: "Yangi parol",
+                      hintText: "6 ta belgidan kam bo'lmagan",
                       controller: passwordController,
                       focusNode: newPasswordFocus, // muhim: focus node ulanmoqda
                       textInputAction: TextInputAction.done,
-                      obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
+                      isPasswordField: true,
                     ),
                     20.verticalSpace,
                     // Password Field
                     CustomTextField(
-                      label: "Confirm password",
+                      label: "Parolni tasdiqlang",
+                      hintText: "Yangi parolni qayta kiriting",
                       controller: confirmController,
-                      obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
+                      isPasswordField: true,
                     ),
                     80.h.verticalSpace,
                   ],
@@ -109,15 +86,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Column(
                   children: [
                     CustomButton(
-                      text: "Create account",
+                      text: "Account yaratish",
                       onPressed: _onRegisterPressed,
                     ),
                     18.verticalSpace,
                     // Register link
                     FooterLink(
                       routeName: AppRoutesNames.login,
-                      linkText: "Sign in",
-                      questionText: "Already have an account? ",
+                      linkText: "Kirish",
+                      questionText: "Akkountingiz bormi? ",
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
+import '../../../../constants/app_images.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../global/widgets/app_bar_widget.dart';
@@ -21,16 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   final phoneFocus = FocusNode();
   final passwordFocus = FocusNode();
-  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(
-        title: 'Login',
-        showBackButton: false,
-      ),
+      appBar: AppBarWidget(title: 'Shaxsiy kabinetga kirish', showBackButton: false),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -43,7 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Column(
                   children: [
                     20.h.verticalSpace,
-                    Image.asset('assets/images/login_logo.png', height: 140.h),
+                    Image(
+                      image: AssetImage(AppImages.loginLogo),
+                      height: 140.h,
+                    ),
                   ],
                 ),
                 Column(
@@ -55,24 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     20.verticalSpace,
                     CustomTextField(
-                      label: "Password",
+                      label: "Parol",
+                      hintText: "6 ta belgidan kam bo'lmagan",
                       controller: passwordController,
                       focusNode: passwordFocus, // muhim: focus node ulanmoqda
                       textInputAction: TextInputAction.done,
-                      obscureText: _obscurePassword,
                       keyboardType: TextInputType.visiblePassword,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
+                      isPasswordField: true,
                       onSubmitted: (_) => _onLoginPressed(),
                     ),
                     12.verticalSpace,
@@ -83,8 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushNamed(context, AppRoutesNames.forgot);
                         },
                         child: Text(
-                          "Forgot password",
-                          style: TextStyle(color: AppColors.primaryColor),
+                          "Parolni unutdingizmi?",
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 14.sp,
+                          ),
                         ),
                       ),
                     ),
@@ -93,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Column(
                   children: [
-                    CustomButton(text: "Sign in", onPressed: _onLoginPressed),
+                    CustomButton(text: "Kirish", onPressed: _onLoginPressed),
                     18.verticalSpace,
                     FooterLink(),
                   ],
@@ -124,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     phoneFocus.dispose();
     passwordFocus.dispose();
-    
+
     super.dispose();
   }
 }

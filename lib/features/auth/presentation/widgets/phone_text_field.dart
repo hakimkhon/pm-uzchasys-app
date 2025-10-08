@@ -59,9 +59,10 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
       ],
       maxLength: 17, // +998 XX XXX XX XX
       decoration: InputDecoration(
-        labelText: "Phone Number",
+        labelText: "Telefon raqam",
+        hintText: "+998 XX XXX XX XX",
         counterText: "",
-        labelStyle: const TextStyle(color: AppColors.secondaryColor),
+        labelStyle: TextStyle(color: AppColors.secondaryColor),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.tertiaryColor),

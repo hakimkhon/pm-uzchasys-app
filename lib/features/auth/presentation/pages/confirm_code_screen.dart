@@ -33,7 +33,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(title: 'Verification code', showBackButton: true),
+      appBar: AppBarWidget(title: 'Tasdiqlash kodi', showBackButton: true),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -59,7 +59,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Didn't receive the code? ",
+                          "Kod kelmadimi? ",
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: AppColors.secondaryColor,
@@ -70,7 +70,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                             debugPrint("Kod qayta yuborildi");
                           },
                           child: Text(
-                            "Resend",
+                            "Qayta yuborish",
                             style: TextStyle(
                               fontSize: 18.sp,
                               color: AppColors.primaryColor,
@@ -102,7 +102,7 @@ class _ConfirmCodeScreenState extends State<ConfirmCodeScreen> {
                                   );
                             }
                           : null,
-                      text: "Confirm",
+                      text: "Davom etish",
                       color: isButtonActive
                           ? AppColors.primaryColor
                           : Colors.grey.shade400,

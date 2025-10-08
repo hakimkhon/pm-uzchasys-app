@@ -60,11 +60,11 @@ class FormValidator {
       return false;
     }
 
-    AppSnackBar.show(
-      context,
-      key: 'success',
-      value: 'telefon: $phone , parol: $password',
-    );
+    // AppSnackBar.show(
+    //   context,
+    //   key: 'success',
+    //   value: 'telefon: $phone , parol: $password',
+    // );
 
     // Faqat routeName kelsa navigatsiya qiladi
     if (routeName != null) {
@@ -138,15 +138,15 @@ class FormValidator {
       return false;
     }
 
-    AppSnackBar.show(
-      context,
-      key: 'success',
-      value: 'Telefon: $phone, parol muvaffaqiyatli tekshirildi',
-    );
+    // AppSnackBar.show(
+    //   context,
+    //   key: 'success',
+    //   value: 'Telefon: $phone, parol muvaffaqiyatli tekshirildi',
+    // );
 
     // Faqat routeName kelsa navigatsiya qiladi
     if (routeName != null) {
-      NavigationService.instance.pushNamedAndRemoveUntil(routeName: routeName, arguments: argument);
+      NavigationService.instance.pushNamed(routeName: routeName, arguments: argument);
     }
 
     return true;

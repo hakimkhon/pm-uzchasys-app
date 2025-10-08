@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
-import 'package:uzchasys_app/constants/app_images.dart';
-import 'package:uzchasys_app/core/routes/app_routes.dart';
-import 'package:uzchasys_app/core/routes/navigation_service.dart';
 import 'package:uzchasys_app/global/widgets/app_bar_widget.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/footer_link.dart';
-import '../widgets/otp_input_field.dart';
-import '../widgets/phone_text_field.dart';
+import '../../../../constants/app_images.dart';
+import '../widgets/new_password_bottom_sheet.dart';
+import '../widgets/otp_step.dart';
+import '../widgets/phone_step.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -19,6 +16,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final phoneController = TextEditingController();
+  final newPasswordController = TextEditingController();
   final phoneFocus = FocusNode();
   final verificationCodeFocus = FocusNode();
 
@@ -27,138 +25,75 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String enteredCode = "";
   String savedPhone = "";
 
-  // OTP to‘liq kiritilganda
+  // OTP kiritilganda
   void handleOtpComplete(String code) {
     setState(() {
       enteredCode = code;
       isButtonActive = code.length == 6;
     });
     FocusScope.of(context).unfocus();
+
+    if (code == "666666") {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        _showNewPasswordBottomSheet();
+      });
+    }
   }
 
-  // Telefon raqam to‘liq kiritilganini tekshirish
+  // Telefon raqam to‘liq kiritilganda
   void handlePhoneChange(String value) {
     if (value.length == 17) {
       setState(() {
         savedPhone = value;
-        isPhoneEntered = true; // Keyingi bosqichga o‘tish
+        isPhoneEntered = true;
       });
       FocusScope.of(context).requestFocus(verificationCodeFocus);
     }
+  }
+
+  // Yangi parol oynasi
+  void _showNewPasswordBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => NewPasswordBottomSheet(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBarWidget(title: 'Reset password', showBackButton: true),
+      appBar: AppBarWidget(title: 'Parolni tiklash', showBackButton: true),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: SizedBox(
-            height: 0.85.sh,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    20.h.verticalSpace,
-                    Image(
-                      image: AssetImage(AppImages.forgotPassword),
-                      height: 140.h,
-                    ),
-                  ],
-                ),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeOut,
-                  child: !isPhoneEntered
-                      ? Column(
-                          key: const ValueKey('phoneStep'),
-                          children: [
-                            Text(
-                              "Tizimda ro'yxatdan o'tgan telefon raqamingizni kiriting. Tasdiqlash kodi ushbu raqamga yuboriladi.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                color: AppColors.secondaryColor,
-                              ),
-                            ),
-                            18.h.verticalSpace,
-                            PhoneTextField(
-                              controller: phoneController,
-                              currentFocus: phoneFocus,
-                              nextFocus: verificationCodeFocus,
-                              onChanged: handlePhoneChange,
-                            ),
-                            120.h.verticalSpace,
-                          ],
-                        )
-                      : Column(
-                          key: const ValueKey('otpStep'),
-                          children: [
-                            OtpInputField(onCompleted: handleOtpComplete),
-                            18.h.verticalSpace,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Didn't receive the code? ",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    color: AppColors.secondaryColor,
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    debugPrint("Kod qayta yuborildi");
-                                  },
-                                  child: Text(
-                                    "Resend",
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      color: AppColors.primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            18.h.verticalSpace,
-                            Text(
-                              "Tasdiqlash kodi $savedPhone raqamiga ochilgan telegramga @Chasysbot orqali yuborildi.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                color: AppColors.secondaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
-                Column(
-                  children: [
-                    CustomButton(
-                      onPressed: isButtonActive
-                          ? () {
-                              NavigationService.instance
-                                  .pushNamedAndRemoveUntil(
-                                routeName: AppRoutesNames.login,
-                              );
-                            }
-                          : null,
-                      text: "Confirm",
-                      color: isButtonActive
-                          ? AppColors.primaryColor
-                          : AppColors.tertiaryColor,
-                    ),
-                    18.verticalSpace,
-                    FooterLink(linkText: "", questionText: ""),
-                  ],
-                ),
-              ],
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              20.h.verticalSpace,
+              Image(image: AssetImage(AppImages.confirmLogo), height: 140.h),
+              20.h.verticalSpace,
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                switchInCurve: Curves.easeIn,
+                switchOutCurve: Curves.easeOut,
+                child: !isPhoneEntered
+                    ? PhoneStep(
+                        phoneController: phoneController,
+                        phoneFocus: phoneFocus,
+                        nextFocus: verificationCodeFocus,
+                        onChanged: handlePhoneChange,
+                      )
+                    : OtpStep(
+                        savedPhone: savedPhone,
+                        verificationCodeFocus: verificationCodeFocus,
+                        onCompleted: handleOtpComplete,
+                      ),
+              ),
+            ],
           ),
         ),
       ),
@@ -168,6 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   void dispose() {
     phoneController.dispose();
+    newPasswordController.dispose();
     phoneFocus.dispose();
     verificationCodeFocus.dispose();
     super.dispose();

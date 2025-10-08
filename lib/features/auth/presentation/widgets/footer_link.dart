@@ -12,8 +12,8 @@ class FooterLink extends StatelessWidget {
   const FooterLink({
     super.key,
     this.routeName = AppRoutesNames.register,
-    this.questionText = "New to UzChasys group? ",
-    this.linkText = "Register",
+    this.questionText = "Sizda akkaunt yo'qmi? ",
+    this.linkText = "Account yaratish",
   });
 
   @override
@@ -23,7 +23,7 @@ class FooterLink extends StatelessWidget {
       children: [
         Text(
           questionText,
-          style: TextStyle(fontSize: 16.sp, color: AppColors.secondaryColor),
+          style: TextStyle(fontSize: 15.sp, color: AppColors.secondaryColor),
         ),
         GestureDetector(
            onTap: (){
@@ -34,7 +34,7 @@ class FooterLink extends StatelessWidget {
             linkText,
             style: TextStyle(
               color: AppColors.primaryColor,
-              fontSize: 16.sp,
+              fontSize: 15.sp,
             ),
           ),
         ),
