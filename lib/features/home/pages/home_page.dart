@@ -37,23 +37,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   // transition builder uses current _selectedIndex and _previousIndex
-  Widget _transitionBuilder(Widget child, Animation<double> animation) {
-    // detect incoming child
-    final isIncoming = (child.key == ValueKey(_selectedIndex));
-    final direction = (_selectedIndex >= _previousIndex) ? 1.0 : -1.0;
+Widget _transitionBuilder(Widget child, Animation<double> animation) {
+  final isIncoming = (child.key == ValueKey(_selectedIndex));
+  final direction = (_selectedIndex >= _previousIndex) ? 1.0 : -1.0;
 
-    final Tween<Offset> tweenIn = Tween(begin: Offset(direction, 0), end: Offset.zero);
-    final Tween<Offset> tweenOut = Tween(begin: Offset.zero, end: Offset(-direction, 0));
+  final slideTweenIn =
+      Tween<Offset>(begin: Offset(direction * 0.25, 0), end: Offset.zero);
+  final slideTweenOut =
+      Tween<Offset>(begin: Offset.zero, end: Offset(-direction * 0.2, 0));
 
-    final Animation<Offset> position = isIncoming
-        ? animation.drive(tweenIn.chain(CurveTween(curve: Curves.easeInOut)))
-        : ReverseAnimation(animation).drive(tweenOut.chain(CurveTween(curve: Curves.easeInOut)));
+  final scaleTweenIn = Tween<double>(begin: 0.95, end: 1.0);
+  final scaleTweenOut = Tween<double>(begin: 1.0, end: 0.95);
 
-    return SlideTransition(
-      position: position,
-      child: FadeTransition(opacity: animation, child: child),
-    );
-  }
+  final slideAnimation = isIncoming
+      ? animation.drive(slideTweenIn.chain(CurveTween(curve: Curves.easeOutCubic)))
+      : ReverseAnimation(animation)
+          .drive(slideTweenOut.chain(CurveTween(curve: Curves.easeOutCubic)));
+
+  final scaleAnimation = isIncoming
+      ? animation.drive(scaleTweenIn.chain(CurveTween(curve: Curves.easeOutCubic)))
+      : ReverseAnimation(animation)
+          .drive(scaleTweenOut.chain(CurveTween(curve: Curves.easeOutCubic)));
+
+  return SlideTransition(
+    position: slideAnimation,
+    child: ScaleTransition(
+      scale: scaleAnimation,
+      child: FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {

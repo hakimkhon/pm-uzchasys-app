@@ -12,4 +12,6 @@ sealed class AppImages {
   static const String new_1 = "$_imagePath/new_1.png";
   static const String new_2 = "$_imagePath/new_2.png";
   static const String new_3 = "$_imagePath/new_3.png";
+  static const String new_4 = "$_imagePath/new_4.png";
+  static const String new_5 = "$_imagePath/new_5.png";
 }
