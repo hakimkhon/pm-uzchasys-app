@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/features/home/widgets/custom_card_button.dart';
+import 'package:uzchasys_app/features/home/widgets/custom_slider.dart';
+import 'package:uzchasys_app/features/home/widgets/favotire_services.dart';
 
 import '../../../constants/app_images.dart';
+import '../widgets/important_information.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -100,99 +103,82 @@ class _MainPageState extends State<MainPage>
                             : BorderRadius.zero,
                         boxShadow: [
                           if (isDrawerOpen)
-                            BoxShadow(color: Colors.black26, blurRadius: 20),
+                            const BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 20,
+                            ),
                         ],
                       ),
                       child: Scaffold(
                         backgroundColor: Colors.white,
                         body: SafeArea(
-                          child: Column(
-                            children: [
-                              // --- CUSTOM APP BAR ---
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w,
-                                  vertical: 10.h,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomCardButton(
-                                      onTap: toggleDrawer,
-                                      child: Icon(Icons.menu, size: 30.sp),
-                                    ),
-                                   
-                                    Image(
-                                      height: 70.h,
-                                      image: AssetImage(AppImages.carLogo),
-                                    ),
-                                    CustomCardButton(
-                                      onTap: () {},
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          Icon(
-                                            Icons.notifications_none,
-                                            size: 30.sp,
-                                          ),
-                                          Positioned(
-                                            right: -11,
-                                            top: -11,
-                                            child: Container(
-                                              padding: EdgeInsets.all(6.r),
-                                              decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Text(
-                                                "9",
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  color: Colors.white,
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // --- CUSTOM APP BAR ---
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomCardButton(
+                                        onTap: toggleDrawer,
+                                        child: Icon(Icons.menu, size: 30.sp),
+                                      ),
+                                      Image(
+                                        height: 70.h,
+                                        image: AssetImage(AppImages.carLogo),
+                                      ),
+                                      CustomCardButton(
+                                        onTap: () {},
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Icon(
+                                              Icons.notifications_none,
+                                              size: 30.sp,
+                                            ),
+                                            Positioned(
+                                              right: -11,
+                                              top: -11,
+                                              child: Container(
+                                                padding: EdgeInsets.all(6.r),
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.red,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Text(
+                                                  "9",
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                  20.h.verticalSpace,
+                              
+                                  ContentTitle(title: "Yangiliklar"),
+                                  const CustomSlider(),
+                                  20.h.verticalSpace,
+                              
+                                  ContentTitle(title: "Muhim ma'lumotlar"),
+                                  ImportantInformation(),
+                                  20.h.verticalSpace,
+                              
+                                  ContentTitle(title: "Sevimli xizmatlar"),
+                                  FavoriteServices(),
+                                ],
                               ),
-
-                              // --- BODY CONTENT ---
-                             Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image(
-                                  image: AssetImage(AppImages.malumotlarOynasi),
-                                ),
-                                20.h.verticalSpace,
-                                Text(
-                                  "Ma'lumotlar oynasi",
-                                  style: TextStyle(
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                10.h.verticalSpace,
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 16.w),
-                                  child: Text(
-                                    "Bu yerda siz o'zingizning barcha ma'lumotlaringizni ko'rishingiz mumkin. Har qanday savol yoki muammolar bo'lsa, biz bilan bog'laning.",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                             )
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -219,6 +205,23 @@ class _MainPageState extends State<MainPage>
             style: TextStyle(color: Colors.white, fontSize: 16.sp),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ContentTitle extends StatelessWidget {
+  final String title;
+
+  const ContentTitle({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 0.w, bottom: 10.h),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
       ),
     );
   }
