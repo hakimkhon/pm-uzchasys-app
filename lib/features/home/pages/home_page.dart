@@ -5,7 +5,7 @@ import '../widgets/custom_nav_item.dart';
 import 'main_page.dart';
 import '../../finance/ui/pages/finance_page.dart';
 import '../../service/ui/pages/service_page.dart';
-import 'document_page.dart';
+import '../../document/ui/pages/document_page.dart';
 import 'profile_page.dart';
 
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     const MainPage(),
     const FinancePage(),
     ServicesPage(),
-    const DocumentPage(),
+    DocumentPage(),
     const ProfilePage(),
   ];
 

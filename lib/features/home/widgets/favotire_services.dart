@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
+import 'package:uzchasys_app/constants/app_images.dart';
 
 class FavoriteServices extends StatelessWidget {
   final List<Map<String, String>> services = [
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Korxona tarixi'},
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Telefon raqamlar'},
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Email ro‘yxati'},
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Lavozimlar'},
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Bo‘limlar'},
-    {'icon': 'assets/images/favorite_service.png', 'title': 'Manzillar'},
+    {'icon': AppImages.favotireServices, 'title': 'Korxona tarixi'},
+    {'icon': AppImages.favotireServices, 'title': 'Telefon raqamlar'},
+    {'icon': AppImages.favotireServices, 'title': 'Email ro‘yxati'},
+    {'icon': AppImages.favotireServices, 'title': 'Lavozimlar'},
+    {'icon': AppImages.favotireServices, 'title': 'Bo‘limlar'},
+    {'icon': AppImages.favotireServices, 'title': 'Manzillar'},
   ];
 
   FavoriteServices({super.key});

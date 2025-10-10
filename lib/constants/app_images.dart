@@ -8,6 +8,7 @@ sealed class AppImages {
   static const String confirmLogo = "$_imagePath/confirm_logo.png";
   static const String registerLogo = "$_imagePath/register_logo.png";
   static const String forgotPassword = "$_imagePath/forgot_password.png";
+  static const String favotireServices = "$_imagePath/favorite_service.png";
   static const String malumotlarOynasi = "$_imagePath/malumotlar_oynasi.png";
   static const String new_1 = "$_imagePath/new_1.png";
   static const String new_2 = "$_imagePath/new_2.png";
