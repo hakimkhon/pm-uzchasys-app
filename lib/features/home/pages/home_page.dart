@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../constants/app_colors.dart';
 import '../widgets/custom_nav_item.dart';
 import 'main_page.dart';
-import 'finance_page.dart';
-import 'service_page.dart';
+import '../../finance/ui/pages/finance_page.dart';
+import '../../service/ui/pages/service_page.dart';
 import 'document_page.dart';
 import 'profile_page.dart';
 
@@ -20,12 +20,12 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   int _previousIndex = 0;
 
-  final List<Widget> _pages = const [
-    MainPage(),
-    FinancePage(),
-    ServicePage(),
-    DocumentPage(),
-    ProfilePage(),
+  final List<Widget> _pages = [
+    const MainPage(),
+    const FinancePage(),
+    ServicesPage(),
+    const DocumentPage(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

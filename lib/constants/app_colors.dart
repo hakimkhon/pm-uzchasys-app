@@ -9,9 +9,9 @@ sealed class AppColors {
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
   static const Color d9d9d9 = Color(0xFFD9D9D9);
-    static const Color unselectedColor = Colors.grey;
+  static const Color unselectedColor = Colors.grey;
   static const Color background = Colors.white;
-
+  static const Color detailPage = Color.fromARGB(255, 238, 234, 238);
 
   static const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
 }

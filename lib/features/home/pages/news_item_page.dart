@@ -18,7 +18,7 @@ class NewsItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 229, 230, 237),
+      backgroundColor: AppColors.detailPage,
       appBar: AppBarWidget(
         title: title,
         showBackButton: true,

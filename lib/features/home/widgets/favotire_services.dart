@@ -4,12 +4,12 @@ import 'package:uzchasys_app/constants/app_colors.dart';
 
 class FavoriteServices extends StatelessWidget {
   final List<Map<String, String>> services = [
-    {'icon': 'assets/icons/history.png', 'title': 'Korxona tarixi'},
-    {'icon': 'assets/icons/history.png', 'title': 'Telefon raqamlar'},
-    {'icon': 'assets/icons/history.png', 'title': 'Email ro‘yxati'},
-    {'icon': 'assets/icons/history.png', 'title': 'Lavozimlar'},
-    {'icon': 'assets/icons/history.png', 'title': 'Bo‘limlar'},
-    {'icon': 'assets/icons/history.png', 'title': 'Manzillar'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Korxona tarixi'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Telefon raqamlar'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Email ro‘yxati'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Lavozimlar'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Bo‘limlar'},
+    {'icon': 'assets/images/favorite_service.png', 'title': 'Manzillar'},
   ];
 
   FavoriteServices({super.key});
@@ -57,13 +57,13 @@ class FavoriteServices extends StatelessWidget {
                   Image.asset(
                     item['icon']!,
                     height: 60.h,
-                    width: 60.w,
+                    width: 80.w,
                   ),
-                  SizedBox(height: 8.h),
                   Center(
                     child: Text(
                       item['title']!,
                       textAlign: TextAlign.center,
+                      maxLines: 2,
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
