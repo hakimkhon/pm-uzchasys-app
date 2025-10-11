@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
-import 'package:uzchasys_app/features/home/widgets/custom_card_button.dart';
+import 'package:uzchasys_app/features/home/ui/widgets/custom_card_button.dart';
 
 class FinanceAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isMonthly;

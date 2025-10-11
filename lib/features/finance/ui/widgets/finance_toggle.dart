@@ -15,7 +15,8 @@ class FinanceToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40.h,
+      height: 50.h,
+      padding: EdgeInsets.all(4.r),
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(50),

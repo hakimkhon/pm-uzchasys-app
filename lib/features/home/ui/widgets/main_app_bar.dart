@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_images.dart';
+import 'package:uzchasys_app/core/routes/app_routes.dart';
+import 'package:uzchasys_app/core/routes/navigation_service.dart';
 import 'custom_card_button.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -18,7 +20,11 @@ class MainAppBar extends StatelessWidget {
         ),
         Image(height: 70.h, image: AssetImage(AppImages.carLogo)),
         CustomCardButton(
-          onTap: () {},
+          onTap: () {
+            NavigationService.instance.pushNamed(
+              routeName: AppRoutesNames.notification,
+            );
+          },
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -28,8 +34,14 @@ class MainAppBar extends StatelessWidget {
                 top: -11,
                 child: Container(
                   padding: EdgeInsets.all(6.r),
-                  decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                  child: Text("9", style: TextStyle(fontSize: 14.sp, color: Colors.white)),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    "9",
+                    style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                  ),
                 ),
               ),
             ],

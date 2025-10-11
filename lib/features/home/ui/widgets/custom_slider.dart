@@ -121,8 +121,8 @@ Bugun korxonamizning asos solinganiga 2009-yil 24-sentyabrdan buyon yillar davom
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               margin: const EdgeInsets.symmetric(horizontal: 2),
-              height: 8,
-              width: isActive ? 40 : 8,
+              height: 6,
+              width: isActive ? 40 : 6,
               decoration: BoxDecoration(
                 color: isActive
                     ? AppColors.primaryColor

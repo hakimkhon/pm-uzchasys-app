@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uzchasys_app/features/auth/presentation/pages/confirm_code_screen.dart';
-import 'package:uzchasys_app/features/auth/presentation/pages/forgot_pass_screen.dart';
-import 'package:uzchasys_app/features/auth/presentation/pages/login_screen.dart';
-import 'package:uzchasys_app/features/auth/presentation/pages/register_screen.dart';
-import 'package:uzchasys_app/features/home/pages/home_page.dart';
+import 'package:uzchasys_app/features/auth/ui/pages/confirm_code_screen.dart';
+import 'package:uzchasys_app/features/auth/ui/pages/forgot_pass_screen.dart';
+import 'package:uzchasys_app/features/auth/ui/pages/login_screen.dart';
+import 'package:uzchasys_app/features/auth/ui/pages/register_screen.dart';
+import 'package:uzchasys_app/features/home/ui/pages/home_page.dart';
+import 'package:uzchasys_app/features/notification/ui/pages/notifications_page.dart';
 
 class AppRoutesNames {
   static const String login = '/login';
@@ -11,6 +12,7 @@ class AppRoutesNames {
   static const String confirm = '/confirm';
   static const String home = '/home';
   static const String forgot = '/forgot';
+  static const String notification = '/notification';
 }
 
 class AppRoutes {
@@ -32,6 +34,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const HomePage());
       case AppRoutesNames.forgot:
         return MaterialPageRoute(builder: (context) => const ForgotPasswordScreen());
+      case AppRoutesNames.notification:
+        return MaterialPageRoute(builder: (context) => const NotificationsPage());
       default:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
     }

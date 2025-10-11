@@ -17,7 +17,7 @@ class PeriodSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36.h,
+      height: 38.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
