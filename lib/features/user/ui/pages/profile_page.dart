@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
-
+import 'package:uzchasys_app/features/home/ui/widgets/custom_card_button.dart';
+import '../../../../core/utils/dialog_utils.dart';
 import '../../../../core/utils/profile_notifier.dart';
 import '../../../../global/widgets/app_bar_widget.dart';
 
@@ -17,15 +19,66 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  File? _profileImage;
-
   Future<void> _pickImage() async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera_alt, color: Colors.blue),
+                title: const Text("Kamera orqali olish"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await _getImageFromCamera();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library, color: Colors.green),
+                title: const Text("Galereyadan tanlash"),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await _getImageFromGallery();
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.close, color: Colors.red),
+                title: const Text("Bekor qilish"),
+                onTap: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _getImageFromCamera() async {
+    final status = await Permission.camera.request();
+    if (status.isGranted) {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(source: ImageSource.camera);
+      if (picked != null) {
+        profileImageNotifier.value = File(picked.path);
+      }
+    } else {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Kamera ruxsati berilmadi")));
+    }
+  }
+
+  Future<void> _getImageFromGallery() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
     if (picked != null) {
-      final file = File(picked.path);
-      setState(() => _profileImage = file);
-      profileImageNotifier.value = file; // <<< Drawer uchun yangilanish
+      profileImageNotifier.value = File(picked.path);
     }
   }
 
@@ -38,26 +91,34 @@ class _ProfilePageState extends State<ProfilePage> {
         title: "Shaxsiy kabinet",
         titleSize: 24.sp,
         centerTitle: false,
+        showBackButton: false,
+        actionWidget: CustomCardButton(
+          onTap: () => showLogoutDialog(context),
+          child: Icon(Icons.logout, color: Colors.red[400]),
+        ),
       ),
-
       backgroundColor: Colors.grey[100],
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.w),
         child: Column(
           children: [
-            // Profil rasmi
             Center(
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 60.r,
-                    backgroundColor: AppColors.primaryColor.withValues(
-                      alpha: 0.2,
-                    ),
-                    backgroundImage: _profileImage != null
-                        ? FileImage(_profileImage!)
-                        : const AssetImage('assets/images/default_user.png')
-                              as ImageProvider,
+                  ValueListenableBuilder<File?>(
+                    valueListenable: profileImageNotifier,
+                    builder: (context, imageFile, _) {
+                      return CircleAvatar(
+                        radius: 60.r,
+                        backgroundColor: AppColors.primaryColor.withValues(
+                          alpha: 0.2,
+                        ),
+                        backgroundImage: imageFile != null
+                            ? FileImage(imageFile)
+                            : const AssetImage('assets/images/default_user.png')
+                                  as ImageProvider,
+                      );
+                    },
                   ),
                   Positioned(
                     bottom: 0,
@@ -82,7 +143,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             14.h.verticalSpace,
-
             Text(
               user["full_name"] ?? "",
               style: TextStyle(fontSize: 19.sp, fontWeight: FontWeight.bold),
@@ -103,10 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 13.sp,
               ),
             ),
-
             10.h.verticalSpace,
-
-            // Ma'lumotlar kartasi
             Container(
               padding: EdgeInsets.all(14.w),
               decoration: BoxDecoration(
@@ -144,26 +201,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 30.h),
-
-            OutlinedButton.icon(
-              icon: const Icon(Icons.logout),
-              label: const Text('Chiqish'),
-              style: OutlinedButton.styleFrom(
-                minimumSize: Size(double.infinity, 48.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                side: BorderSide(color: AppColors.primaryColor),
-              ),
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Tizimdan chiqish amalga oshirildi'),
-                  ),
-                );
-              },
             ),
           ],
         ),
@@ -204,34 +241,3 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _divider() => Divider(height: 10.h, color: Colors.grey.shade300);
 }
-
-
-
-
-// class ProfilePage extends StatefulWidget {
-//   final Map<String, dynamic> userData;
-
-//   const ProfilePage({super.key, required this.userData});
-
-//   @override
-//   State<ProfilePage> createState() => _ProfilePageState();
-// }
-
-// class _ProfilePageState extends State<ProfilePage> {
-//   File? _profileImage;
-
-//   Future<void> _pickImage() async {
-//     final picker = ImagePicker();
-//     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-//     if (pickedFile != null) {
-//       setState(() => _profileImage = File(pickedFile.path));
-//       // kerak bo‘lsa bu joyda serverga yuklash funksiyasini chaqirasiz
-//       debugPrint("Yangi rasm yo‘li: ${pickedFile.path}");
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final user = widget.userData;
-
-

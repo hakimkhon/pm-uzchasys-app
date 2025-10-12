@@ -3,8 +3,11 @@ import 'package:uzchasys_app/features/auth/ui/pages/confirm_code_screen.dart';
 import 'package:uzchasys_app/features/auth/ui/pages/forgot_pass_screen.dart';
 import 'package:uzchasys_app/features/auth/ui/pages/login_screen.dart';
 import 'package:uzchasys_app/features/auth/ui/pages/register_screen.dart';
+import 'package:uzchasys_app/features/document/ui/pages/document_page.dart';
 import 'package:uzchasys_app/features/home/ui/pages/home_page.dart';
 import 'package:uzchasys_app/features/notification/ui/pages/notifications_page.dart';
+
+import '../../features/user/ui/pages/profile_page.dart';
 
 class AppRoutesNames {
   static const String login = '/login';
@@ -13,6 +16,12 @@ class AppRoutesNames {
   static const String home = '/home';
   static const String forgot = '/forgot';
   static const String notification = '/notification';
+  static const String documents = '/documents';
+  static const String profile = '/profile';
+  static const String settings = '/settings';
+  static const String about = '/about';
+  static const String help = '/help';
+  static const String service = '/service';
 }
 
 class AppRoutes {
@@ -36,6 +45,12 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const ForgotPasswordScreen());
       case AppRoutesNames.notification:
         return MaterialPageRoute(builder: (context) => const NotificationsPage());
+      case AppRoutesNames.documents:
+        return MaterialPageRoute(builder: (context) => DocumentPage());
+      case AppRoutesNames.profile:
+        return MaterialPageRoute(
+          builder: (context) => ProfilePage(userData: settings.arguments as Map<String, dynamic>),
+        );
       default:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
     }

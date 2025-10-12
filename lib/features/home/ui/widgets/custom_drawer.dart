@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:uzchasys_app/core/routes/app_routes.dart';
+import 'package:uzchasys_app/core/routes/navigation_service.dart';
 import '../../../../constants/app_colors.dart';
+import '../../../../core/utils/dialog_utils.dart';
 import '../../../../core/utils/profile_notifier.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -28,12 +31,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
               builder: (context, file, _) {
                 return CircleAvatar(
                   radius: 55.r,
-                  backgroundColor:
-                      AppColors.primaryColor.withValues(alpha: 0.2),
+                  backgroundColor: AppColors.primaryColor.withValues(
+                    alpha: 0.2,
+                  ),
                   backgroundImage: file != null
                       ? FileImage(file)
                       : const AssetImage('assets/images/default_user.png')
-                          as ImageProvider,
+                            as ImageProvider,
                 );
               },
             ),
@@ -51,20 +55,34 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
 
           SizedBox(height: 30.h),
-          drawerItem(Icons.person, "Profil", onTap: () {
-            Navigator.pop(context);
-            // Profil sahifasiga o‘tish uchun navigatsiya shu yerda
-          }),
-          drawerItem(Icons.insert_drive_file_rounded, "Xujjatlar", onTap: () {}),
+          drawerItem(
+            Icons.person,
+            "Profil",
+            onTap: () {
+              // NavigationService.instance.pushNamedAndRemoveUntil(
+              //   routeName: AppRoutesNames.profile,
+              // );
+              // Profil sahifasiga o‘tish uchun navigatsiya shu yerda
+            },
+          ),
+          drawerItem(
+            Icons.insert_drive_file_rounded,
+            "Xujjatlar",
+            onTap: () {
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.documents,
+              );
+            },
+          ),
           drawerItem(Icons.settings, "Sozlamalar", onTap: () {}),
           drawerItem(Icons.help_outline, "Yordam", onTap: () {}),
           const Spacer(),
-          Divider(color: Colors.white.withOpacity(0.3)),
-          drawerItem(Icons.logout, "Chiqish", onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Tizimdan chiqish amalga oshirildi")),
-            );
-          }),
+          Divider(color: Colors.white.withValues(alpha: 0.3)),
+          drawerItem(
+            Icons.logout,
+            "Chiqish",
+             onTap: () => showLogoutDialog(context),
+          ),
         ],
       ),
     );
