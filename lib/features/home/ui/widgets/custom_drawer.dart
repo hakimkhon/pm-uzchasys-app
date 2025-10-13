@@ -54,22 +54,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
 
-          SizedBox(height: 30.h),
-          drawerItem(
-            Icons.person,
-            "Profil",
-            onTap: () {
-              // NavigationService.instance.pushNamedAndRemoveUntil(
-              //   routeName: AppRoutesNames.profile,
-              // );
-              // Profil sahifasiga o‘tish uchun navigatsiya shu yerda
-            },
-          ),
+          // SizedBox(height: 30.h),
+          // drawerItem(
+          //   Icons.person,
+          //   "Profil",
+          //   onTap: () {
+          //     NavigationService.instance.pushNamedAndRemoveUntil(
+          //       routeName: AppRoutesNames.profile,
+          //     );
+          //     // Profil sahifasiga o‘tish uchun navigatsiya shu yerda
+          //   },
+          // ),
           drawerItem(
             Icons.insert_drive_file_rounded,
             "Xujjatlar",
             onTap: () {
-              NavigationService.instance.pushNamedAndRemoveUntil(
+              NavigationService.instance.pushReplacementNamed(
                 routeName: AppRoutesNames.documents,
               );
             },
