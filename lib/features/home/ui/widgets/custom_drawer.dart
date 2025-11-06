@@ -7,14 +7,10 @@ import '../../../../constants/app_colors.dart';
 import '../../../../core/utils/dialog_utils.dart';
 import '../../../../core/utils/profile_notifier.dart';
 
-class CustomDrawer extends StatefulWidget {
+class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
-  @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
 
-class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +38,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               },
             ),
           ),
-          SizedBox(height: 14.h),
+          14.h.verticalSpace,
           Center(
             child: Text(
               "Mening profilim",
@@ -54,26 +50,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
 
-          // SizedBox(height: 30.h),
-          // drawerItem(
-          //   Icons.person,
-          //   "Profil",
-          //   onTap: () {
-          //     NavigationService.instance.pushNamedAndRemoveUntil(
-          //       routeName: AppRoutesNames.profile,
-          //     );
-          //     // Profil sahifasiga o‘tish uchun navigatsiya shu yerda
-          //   },
-          // ),
           drawerItem(
             Icons.insert_drive_file_rounded,
             "Xujjatlar",
             onTap: () {
-              NavigationService.instance.pushReplacementNamed(
-                routeName: AppRoutesNames.documents,
-              );
+              Navigator.pop(context); // Drawer ni yopish
+              Future.delayed(Duration.zero, () {
+                NavigationService.instance.pushNamed(
+                  routeName: AppRoutesNames.documents,
+                );
+              });
             },
           ),
+
           drawerItem(Icons.settings, "Sozlamalar", onTap: () {}),
           drawerItem(Icons.help_outline, "Yordam", onTap: () {}),
           const Spacer(),
@@ -81,7 +70,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           drawerItem(
             Icons.logout,
             "Chiqish",
-             onTap: () => showLogoutDialog(context),
+            onTap: () => showLogoutDialog(context),
           ),
         ],
       ),

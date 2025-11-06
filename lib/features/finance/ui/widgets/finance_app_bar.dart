@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
 import 'package:uzchasys_app/features/home/ui/widgets/custom_card_button.dart';
 
+// import '../../../../core/routes/app_routes.dart';
+// import '../../../../core/routes/navigation_service.dart';
+
 class FinanceAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isMonthly;
 
@@ -18,7 +21,15 @@ class FinanceAppBar extends StatelessWidget implements PreferredSizeWidget {
         fontSize: 24.sp,
         fontWeight: FontWeight.w600,
       ),
-      automaticallyImplyLeading: false,
+      centerTitle: true,
+      // leading: IconButton(
+      //   icon: const Icon(Icons.arrow_back, color: AppColors.white),
+      //   onPressed: () {
+      //     NavigationService.instance.pushReplacementNamed(
+      //       routeName: AppRoutesNames.home,
+      //     );
+      //   },
+      // ),
       actions: [
         if (!isMonthly)
           CustomCardButton(

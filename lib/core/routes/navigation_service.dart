@@ -27,4 +27,6 @@ class NavigationService {
         routeName, (route) => false,
         arguments: arguments);
   }
+
+  void pop([Object? result]) => navigatorKey.currentState?.pop(result);
 }

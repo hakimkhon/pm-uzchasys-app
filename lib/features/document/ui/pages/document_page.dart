@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
 
+import '../../../../core/routes/app_routes.dart';
+import '../../../../core/routes/navigation_service.dart';
 import '../../../service/ui/pages/service_detail_page.dart';
 
 
@@ -30,7 +32,7 @@ class DocumentPage extends StatelessWidget {
      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        automaticallyImplyLeading: false,
+        centerTitle: true,
         elevation: 0,
         title: Text(
           'Xujjatlar',
@@ -40,6 +42,14 @@ class DocumentPage extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+         leading: IconButton(
+        icon: const Icon(Icons.arrow_back, ),
+        onPressed: () {
+          NavigationService.instance.pushReplacementNamed(
+            routeName: AppRoutesNames.home,
+          );
+        },
+      ),
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: AppColors.secondaryColor, size: 26.sp),
