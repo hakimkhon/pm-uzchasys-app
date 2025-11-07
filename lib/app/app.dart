@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               ),
               navigatorKey: NavigationService.instance.navigatorKey,
               onGenerateRoute: AppRoutes.generateRoute,
-              initialRoute: AppRoutesNames.home,
+              initialRoute: AppRoutesNames.login,
            
           );
         });

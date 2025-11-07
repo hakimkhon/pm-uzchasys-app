@@ -32,8 +32,6 @@ class DocumentPage extends StatelessWidget {
      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        centerTitle: true,
-        elevation: 0,
         title: Text(
           'Xujjatlar',
           style: TextStyle(
@@ -42,14 +40,7 @@ class DocumentPage extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-         leading: IconButton(
-        icon: const Icon(Icons.arrow_back, ),
-        onPressed: () {
-          NavigationService.instance.pushReplacementNamed(
-            routeName: AppRoutesNames.home,
-          );
-        },
-      ),
+    
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: AppColors.secondaryColor, size: 26.sp),

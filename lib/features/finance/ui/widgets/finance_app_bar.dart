@@ -15,21 +15,14 @@ class FinanceAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text("Moliyaviy ma'lumotlar"),
+      centerTitle: false,
       backgroundColor: AppColors.white,
       titleTextStyle: TextStyle(
         color: AppColors.secondaryColor,
         fontSize: 24.sp,
         fontWeight: FontWeight.w600,
       ),
-      centerTitle: true,
-      // leading: IconButton(
-      //   icon: const Icon(Icons.arrow_back, color: AppColors.white),
-      //   onPressed: () {
-      //     NavigationService.instance.pushReplacementNamed(
-      //       routeName: AppRoutesNames.home,
-      //     );
-      //   },
-      // ),
+    
       actions: [
         if (!isMonthly)
           CustomCardButton(

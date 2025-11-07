@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:uzchasys_app/core/routes/app_routes.dart';
 import 'package:uzchasys_app/global/widgets/app_bar_widget.dart';
 
 class NotificationsPage extends StatelessWidget {
@@ -8,8 +9,13 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(title: "Notifications", titleSize: 24.sp,),
-      body: Center(child: Text("Barcha Bildirishnomalar shu joyda"),),
+      appBar: AppBarWidget(
+        title: "Notifications",
+        titleSize: 24.sp,
+        showBackButton: true,
+        backRouteName: AppRoutesNames.home,
+      ),
+      body: Center(child: Text("Barcha Bildirishnomalar shu joyda")),
     );
   }
 }

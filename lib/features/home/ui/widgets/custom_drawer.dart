@@ -10,7 +10,6 @@ import '../../../../core/utils/profile_notifier.dart';
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,22 +48,54 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
+          14.h.verticalSpace,
 
           drawerItem(
             Icons.insert_drive_file_rounded,
-            "Xujjatlar",
+            "Ma'lumotnomalar",
             onTap: () {
-              Navigator.pop(context); // Drawer ni yopish
-              Future.delayed(Duration.zero, () {
-                NavigationService.instance.pushNamed(
-                  routeName: AppRoutesNames.documents,
-                );
-              });
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.info,
+              );
             },
           ),
 
-          drawerItem(Icons.settings, "Sozlamalar", onTap: () {}),
-          drawerItem(Icons.help_outline, "Yordam", onTap: () {}),
+          drawerItem(
+            Icons.notifications,
+            "Bildirishnomalar",
+            onTap: () {
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.notification,
+              );
+            },
+          ),
+          drawerItem(
+            Icons.settings,
+            "Sozlamalar",
+            onTap: () {
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.settings,
+              );
+            },
+          ),
+          drawerItem(
+            Icons.info_outline,
+            "Ilova haqida",
+            onTap: () {
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.about,
+              );
+            },
+          ),
+          drawerItem(
+            Icons.help_outline,
+            "Yordam",
+            onTap: () {
+              NavigationService.instance.pushNamedAndRemoveUntil(
+                routeName: AppRoutesNames.help,
+              );
+            },
+          ),
           const Spacer(),
           Divider(color: Colors.white.withValues(alpha: 0.3)),
           drawerItem(

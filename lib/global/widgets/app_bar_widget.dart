@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/app_colors.dart';
-
+import '../../core/routes/navigation_service.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showBackButton;
   final bool centerTitle;
-  final Widget? actionWidget; // bu endi IconData emas, to‘g‘ridan-to‘g‘ri Widget
+  final Widget? actionWidget;
   final double? titleSize;
+
+  // yangi parametr
+  final String? backRouteName; // orqaga bosilganda o'tadigan sahifa nomi
 
   const AppBarWidget({
     super.key,
@@ -18,6 +21,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.actionWidget,
     this.titleSize,
+    this.backRouteName, // yangi parametr
   });
 
   @override
@@ -25,8 +29,21 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.white,
       centerTitle: centerTitle,
-      automaticallyImplyLeading: showBackButton,
-      iconTheme: IconThemeData(color: AppColors.secondaryColor),
+      automaticallyImplyLeading: false, // biz o'zimiz nazorat qilamiz
+      leading: showBackButton
+          ? IconButton(
+              icon: Icon(Icons.arrow_back, color: AppColors.secondaryColor),
+              onPressed: () {
+                if (backRouteName != null) {
+                  // Belgilangan sahifaga o'tish
+                  NavigationService.instance.pushReplacementNamed(routeName: backRouteName!);
+                } else {
+                  // Default — orqaga qaytish
+                  Navigator.pop(context);
+                }
+              },
+            )
+          : null,
       title: Text(
         title,
         style: TextStyle(
