@@ -2,26 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uzchasys_app/constants/app_colors.dart';
 
-import '../../../../core/routes/app_routes.dart';
-import '../../../../core/routes/navigation_service.dart';
-import '../../../service/ui/pages/service_detail_page.dart';
-
+import 'document_detail_page.dart';
 
 class DocumentPage extends StatelessWidget {
   final List<Map<String, String>> services = [
     {'icon': 'assets/images/doc_template.png', 'title': 'Erkin shablonlar'},
-    {'icon': 'assets/images/doc_template.png', 'title': 'Lavozimdan ozod etish'},
-    {'icon': 'assets/images/doc_template.png', 'title': 'Ish haqi saqlangan holda ta\'til'},
-    {'icon': 'assets/images/doc_template.png', 'title': 'Ish haqi saqlanmagan holda ta\'til'},
+    {
+      'icon': 'assets/images/doc_template.png',
+      'title': 'Lavozimdan ozod etish',
+    },
+    {
+      'icon': 'assets/images/doc_template.png',
+      'title': 'Ish haqi saqlangan holda ta\'til',
+    },
+    {
+      'icon': 'assets/images/doc_template.png',
+      'title': 'Ish haqi saqlanmagan holda ta\'til',
+    },
     {'icon': 'assets/images/doc_template.png', 'title': 'Ta\'tilga chiqish'},
     {'icon': 'assets/images/doc_template.png', 'title': 'Kasallik varaqasi'},
-    {'icon': 'assets/images/doc_template.png', 'title': 'Boshqa lavozimlga o\'tkazish'},
-    {'icon': 'assets/images/doc_template.png', 'title': 'Imtiyozdan foydalanish'},
+    {
+      'icon': 'assets/images/doc_template.png',
+      'title': 'Boshqa lavozimlga o\'tkazish',
+    },
+    {
+      'icon': 'assets/images/doc_template.png',
+      'title': 'Imtiyozdan foydalanish',
+    },
     {'icon': 'assets/images/doc_template.png', 'title': 'Rozilik berish'},
     {'icon': 'assets/images/doc_template.png', 'title': 'Moddiy yordam'},
     {'icon': 'assets/images/doc_template.png', 'title': 'Fara sotib olish'},
     {'icon': 'assets/images/doc_template.png', 'title': 'Tushintirish xati'},
-
   ];
 
   DocumentPage({super.key});
@@ -29,7 +40,7 @@ class DocumentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: AppColors.white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: AppColors.white,
         title: Text(
@@ -40,14 +51,20 @@ class DocumentPage extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-    
+
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: AppColors.secondaryColor, size: 26.sp),
+            icon: Icon(
+              Icons.search,
+              color: AppColors.secondaryColor,
+              size: 26.sp,
+            ),
             onPressed: () {
               // qidiruv logikasi shu yerda yoziladi
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Qidiruv funksiyasi tez orada...')),
+                const SnackBar(
+                  content: Text('Qidiruv funksiyasi tez orada...'),
+                ),
               );
             },
           ),
@@ -71,7 +88,8 @@ class DocumentPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ServiceDetailPage(service: item),
+                    builder: (context) =>
+                        DocumentDetailPage(documentTitle: item['title']!),
                   ),
                 );
               },

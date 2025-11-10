@@ -10,6 +10,7 @@ import 'package:uzchasys_app/features/info/ui/pages/help_page.dart';
 import 'package:uzchasys_app/features/info/ui/pages/info_page.dart';
 import 'package:uzchasys_app/features/info/ui/pages/settings_page.dart';
 import 'package:uzchasys_app/features/notification/ui/pages/notifications_page.dart';
+import 'package:uzchasys_app/features/service/ui/pages/service_page.dart';
 
 import '../../features/user/ui/pages/profile_page.dart';
 
@@ -22,6 +23,7 @@ class AppRoutesNames {
   static const String notification = '/notification';
   static const String documents = '/documents';
   static const String profile = '/profile';
+  static const String service = '/service';
   static const String settings = '/settings';
   static const String about = '/about';
   static const String help = '/help';
@@ -61,6 +63,9 @@ class AppRoutes {
           builder: (context) =>
               ProfilePage(userData: settings.arguments as Map<String, dynamic>),
         );
+
+      case AppRoutesNames.service:
+        return MaterialPageRoute(builder: (context) => ServicesPage());
 
       case AppRoutesNames.settings:
         return MaterialPageRoute(builder: (context) => const SettingsPage());
