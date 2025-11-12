@@ -111,7 +111,7 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
         children: [
           Expanded(flex: 60, child: DocumentContent()),
           Expanded(
-            flex: 40,
+            flex: 30,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: SignatureSection(
@@ -128,6 +128,7 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
             onPressed: _previewAndPrintPdf,
             enabled: _hasSignature,
           ),
+          20.h.verticalSpace
         ],
       ),
     );

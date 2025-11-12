@@ -40,9 +40,9 @@ class DocumentAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.print, color: AppColors.secondaryColor),
+          icon: Icon(Icons.edit_document, color: AppColors.secondaryColor),
           onPressed: onPrint,
-          tooltip: 'Chop etish',
+          tooltip: 'O\'zgartirish',
         ),
         IconButton(
           icon: Icon(Icons.download, color: AppColors.secondaryColor),

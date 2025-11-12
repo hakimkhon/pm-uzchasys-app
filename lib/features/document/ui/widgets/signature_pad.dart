@@ -1,8 +1,9 @@
-
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+import '../../../../constants/app_colors.dart';
 
 class SignaturePad extends StatefulWidget {
   final VoidCallback onClear;
@@ -46,47 +47,64 @@ class SignaturePadState extends State<SignaturePad> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue, width: 1),
-      ),
-      child: RepaintBoundary(
-        key: _repaintKey,
-        child: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onPanStart: (details) {
-            RenderBox box = context.findRenderObject() as RenderBox;
-            Offset local = box.globalToLocal(details.globalPosition);
-            // Faqat Container ichidagi nuqtalarni qabul qilish
-            if (local.dx >= 0 && local.dy >= 0 && local.dx <= box.size.width && local.dy <= box.size.height) {
-              setState(() {
-                _points = [local];
-              });
-            }
+    return RepaintBoundary(
+      key: _repaintKey,
+      child: Container(
+        margin: const EdgeInsets.all(2.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.blue, width: 1),
+        ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onPanStart: (details) {
+                final box = context.findRenderObject() as RenderBox;
+                final local = box.globalToLocal(details.globalPosition);
+                debugPrint('Chizish boshlandi: $local | Constraints: ${constraints.maxWidth}x${constraints.maxHeight}');
+
+                // Aniqlik uchun: constraints ichida ekanligini tekshiramiz
+                if (local.dx >= 0 &&
+                    local.dy >= 0 &&
+                    local.dx <= constraints.maxWidth &&
+                    local.dy <= constraints.maxHeight) {
+                  setState(() {
+                    if (_points.isNotEmpty && _points.last != Offset.infinite) {
+                      _points.add(Offset.infinite);
+                    }
+                    _points.add(local);
+                  });
+                }
+              },
+              onPanUpdate: (details) {
+                final box = context.findRenderObject() as RenderBox;
+                final local = box.globalToLocal(details.globalPosition);
+
+                if (local.dx >= 0 &&
+                    local.dy >= 0 &&
+                    local.dx <= constraints.maxWidth &&
+                    local.dy <= constraints.maxHeight) {
+                  setState(() {
+                    _points.add(local);
+                  });
+                }
+              },
+              onPanEnd: (details) {
+                setState(() {
+                  if (_points.isNotEmpty && _points.last != Offset.infinite) {
+                    _points.add(Offset.infinite);
+                  }
+                });
+                widget.onDraw();
+              },
+              child: CustomPaint(
+                painter: SignaturePainter(_points),
+                child: const SizedBox.expand(), // ⭐ Bu juda muhim!
+              ),
+            );
           },
-          onPanUpdate: (details) {
-            RenderBox box = context.findRenderObject() as RenderBox;
-            Offset local = box.globalToLocal(details.globalPosition);
-            // Chegaraga tushsa, chizishni to'xtatish
-            if (local.dx >= 0 && local.dy >= 0 && local.dx <= box.size.width && local.dy <= box.size.height) {
-              setState(() {
-                _points = List.from(_points)..add(local);
-              });
-            }
-          },
-          onPanEnd: (details) {
-            if (_points.isNotEmpty) widget.onDraw();
-          },
-          child: CustomPaint(
-            painter: SignaturePainter(_points),
-            child: Container(
-              color: Colors.white10,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
         ),
       ),
     );
@@ -103,14 +121,21 @@ class SignaturePainter extends CustomPainter {
     if (points.isEmpty) return;
 
     final paint = Paint()
-      ..color = Colors.black
+      ..color = AppColors.primaryColor
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 3.0;
+      ..strokeWidth = 2.0;
 
-    for (int i = 0; i < points.length - 1; i++) {
-      if (points[i].isFinite && points[i + 1].isFinite) {
-        canvas.drawLine(points[i], points[i + 1], paint);
+    Offset? lastPoint;
+    for (var i = 0; i < points.length; i++) {
+      final point = points[i];
+      if (point == Offset.infinite) {
+        lastPoint = null;
+        continue;
       }
+      if (lastPoint != null) {
+        canvas.drawLine(lastPoint, point, paint);
+      }
+      lastPoint = point;
     }
   }
 

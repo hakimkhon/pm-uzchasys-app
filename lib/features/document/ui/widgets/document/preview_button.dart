@@ -20,11 +20,11 @@ class PreviewButton extends StatelessWidget {
       padding: EdgeInsets.all(12.w),
       child: SizedBox(
         width: double.infinity,
-        height: 45.h,
+        height: 50.h,
         child: ElevatedButton.icon(
           onPressed: enabled ? onPressed : null,
-          icon: Icon(Icons.visibility, size: 20.sp),
-          label: Text('Ko\'rib chiqish va Chop etish'),
+          icon: Icon(Icons.check_circle, size: 20.sp),
+          label: Text('Hujjatni tasdiqlash', style: TextStyle(fontSize: 16.sp)),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,
             foregroundColor: Colors.white,
