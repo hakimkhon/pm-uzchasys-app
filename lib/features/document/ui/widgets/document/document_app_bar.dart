@@ -7,14 +7,14 @@ import 'package:uzchasys_app/constants/app_colors.dart';
 class DocumentAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback onBack;
-  final VoidCallback onPrint;
+  final VoidCallback onEdit;
   final VoidCallback onSave;
 
   const DocumentAppBar({
     super.key,
     required this.title,
     required this.onBack,
-    required this.onPrint,
+    required this.onEdit,
     required this.onSave,
   });
 
@@ -41,7 +41,7 @@ class DocumentAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: Icon(Icons.edit_document, color: AppColors.secondaryColor),
-          onPressed: onPrint,
+          onPressed: onEdit,
           tooltip: 'O\'zgartirish',
         ),
         IconButton(

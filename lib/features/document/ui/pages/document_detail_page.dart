@@ -23,7 +23,8 @@ class DocumentDetailPage extends StatefulWidget {
 }
 
 class _DocumentDetailPageState extends State<DocumentDetailPage> {
-  final GlobalKey<SignaturePadState> _signaturePadKey = GlobalKey<SignaturePadState>();
+  final GlobalKey<SignaturePadState> _signaturePadKey =
+      GlobalKey<SignaturePadState>();
   bool _hasSignature = false;
 
   Future<Uint8List?> _captureSignature() async {
@@ -41,22 +42,36 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
         build: (context) => pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            pw.Text(widget.documentTitle, style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            pw.Text(
+              widget.documentTitle,
+              style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+            ),
             pw.SizedBox(height: 20),
-            pw.Text('Hujjat mazmuni', style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+            pw.Text(
+              'Hujjat mazmuni',
+              style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+            ),
             pw.SizedBox(height: 10),
             pw.Text(
-              'Bu yerda hujjat matni joylashadi. Hozircha namuna matn ko\'rsatilgan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. yana bir nechta jumlalar bilan hujjat mazmuni to\'ldiriladi. Required content to demonstrate scrolling behavior in the document content area. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Required content to demonstrate scrolling behavior in the document content area. With additional lines to ensure the content exceeds the visible area and requires scrolling. Quis do eiusmod tempor incididunt ut labore et dolore magna aliqua.',   
+              'Bu yerda hujjat matni joylashadi. Hozircha namuna matn ko\'rsatilgan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. yana bir nechta jumlalar bilan hujjat mazmuni to\'ldiriladi. Required content to demonstrate scrolling behavior in the document content area. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Required content to demonstrate scrolling behavior in the document content area. With additional lines to ensure the content exceeds the visible area and requires scrolling. Quis do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
               style: const pw.TextStyle(fontSize: 14, lineSpacing: 1.5),
             ),
             pw.SizedBox(height: 40),
             if (signatureBytes != null) ...[
-              pw.Text('Imzo:', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+              pw.Text(
+                'Imzo:',
+                style: pw.TextStyle(
+                  fontSize: 16,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
               pw.SizedBox(height: 10),
               pw.Container(
                 height: 100,
                 width: 250,
-                decoration: pw.BoxDecoration(border: pw.Border.all(color: PdfColors.grey)),
+                decoration: pw.BoxDecoration(
+                  border: pw.Border.all(color: PdfColors.grey),
+                ),
                 child: pw.Image(pw.MemoryImage(signatureBytes)),
               ),
               pw.SizedBox(height: 10),
@@ -77,7 +92,10 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
     if (!_hasSignature) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Iltimos, avval imzo qo\'ying!'), backgroundColor: Colors.orange),
+        const SnackBar(
+          content: Text('Iltimos, avval imzo qo\'ying!'),
+          backgroundColor: Colors.orange,
+        ),
       );
       return;
     }
@@ -85,7 +103,10 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
     try {
       final pdfData = await _generatePdf();
       if (!mounted) return;
-      await Printing.layoutPdf(onLayout: (format) async => pdfData, name: '${widget.documentTitle}.pdf');
+      await Printing.layoutPdf(
+        onLayout: (format) async => pdfData,
+        name: '${widget.documentTitle}.pdf',
+      );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,7 +122,7 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
       appBar: DocumentAppBar(
         title: widget.documentTitle,
         onBack: () => Navigator.pop(context),
-        onPrint: _previewAndPrintPdf,
+        onEdit: _previewAndPrintPdf,
         onSave: () {
           // Agar kerak bo'lsa, _savePdf() qo'shishingiz mumkin
           _previewAndPrintPdf(); // hozircha bir xil
@@ -124,11 +145,8 @@ class _DocumentDetailPageState extends State<DocumentDetailPage> {
               ),
             ),
           ),
-          PreviewButton(
-            onPressed: _previewAndPrintPdf,
-            enabled: _hasSignature,
-          ),
-          20.h.verticalSpace
+          PreviewButton(onPressed: _previewAndPrintPdf, enabled: _hasSignature),
+          20.h.verticalSpace,
         ],
       ),
     );
